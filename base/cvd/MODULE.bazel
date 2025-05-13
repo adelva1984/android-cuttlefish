@@ -28,11 +28,13 @@ bazel_dep(name = "libjpeg_turbo", version = "2.1.91")
 bazel_dep(name = "libpng", version = "1.6.47.bcr.1")
 bazel_dep(name = "libxml2", version = "2.13.5")
 bazel_dep(name = "libzip", version = "1.10.1")
+bazel_dep(name = "openssl", version = "3.3.1.bcr.1")
 bazel_dep(name = "platforms", version = "0.0.11")
 bazel_dep(name = "protobuf", version = "29.1")
 bazel_dep(name = "rules_cc", version = "0.1.1")
+bazel_dep(name = "rules_proto", version = "7.1.0")
 bazel_dep(name = "rules_proto_grpc_cpp", version = "5.0.1")
-bazel_dep(name = "rules_python", version = "0.40.0")
+bazel_dep(name = "rules_python", version = "1.1.0")
 bazel_dep(name = "rules_rust", version = "0.60.0")
 bazel_dep(name = "tinyxml2", version = "10.0.0")
 bazel_dep(name = "toolchains_llvm", version = "1.2.0")
@@ -127,6 +129,25 @@ vhost_user_input_crates.from_cargo(
     host_tools_repo = "rust_host_tools_nightly",
 )
 use_repo(vhost_user_input_crates, "vhost_user_input_crates")
+
+rootcanal_crates = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+rootcanal_crates.spec(package = "bytes", version = "1.0.1")
+rootcanal_crates.spec(package = "num-bigint", version = "0.4.3")
+rootcanal_crates.spec(package = "num-derive", version = "0.3.3")
+rootcanal_crates.spec(package = "num-integer", version = "0.1.45")
+rootcanal_crates.spec(package = "num-traits", version = "0.2.14")
+rootcanal_crates.spec(package = "paste", version = "1.0.4")
+rootcanal_crates.spec(package = "pdl-runtime", version = "0.3.2")
+rootcanal_crates.spec(package = "pin-utils", version = "0.1.0")
+rootcanal_crates.spec(package = "rand", version = "0.8.3")
+#rootcanal_crates.spec(package = "thiserror", version = "1.0.23")
+rootcanal_crates.from_specs(
+    # FIXME: hack
+    cargo_config = "@//build_external/crosvm:crosvm.config.toml",
+    host_tools_repo = "rust_host_tools_nightly",
+)
+# Generic "crates" name used for rootcanal/BUILD downstream
+use_repo(rootcanal_crates, "crates")
 
 git_override(
     module_name = "aspect_rules_lint",
@@ -454,4 +475,24 @@ git_repository(
     build_file = "@//:BUILD.libnl.bazel",
     commit = "f9682564a48d5ac5ee922de49e81aab4aa984f1e",
     remote = "https://android.googlesource.com/platform/external/libnl",
+)
+
+git_repository(
+    name = "fmtlib",
+    build_file = "@//:BUILD.fmtlib.bazel",
+    commit = "3a2c50d4ac462d1d526d80f90e2cc3d8adf73e0a",
+    remote = "https://github.com/fmtlib/fmt",
+)
+
+git_repository(
+    name = "pdl",
+    build_file = "@//:BUILD.pdl.bazel",
+    commit = "b2cfaca987fff89caf6b632f20b5d57d78be72df",
+    remote = "https://github.com/google/pdl",
+)
+
+git_repository(
+    name = "rootcanal",
+    commit = "9d7fb583f7b08f4f5c13095bca5c37736b2cc4bc",
+    remote = "https://github.com/google/rootcanal",
 )

@@ -1,0 +1,37 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+py_binary(
+    name = "generate_cxx_backend",
+    main = "pdl-compiler/scripts/generate_cxx_backend.py",
+    srcs = [
+        "pdl-compiler/scripts/generate_cxx_backend.py",
+        "pdl-compiler/scripts/pdl/ast.py",
+        "pdl-compiler/scripts/pdl/core.py",
+        "pdl-compiler/scripts/pdl/utils.py",
+    ],
+    legacy_create_init = 0,
+    imports = ["pdl-compiler/scripts"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "generate_python_backend",
+    srcs = [
+        "pdl-compiler/scripts/generate_python_backend.py",
+        "pdl-compiler/scripts/pdl/ast.py",
+        "pdl-compiler/scripts/pdl/core.py",
+        "pdl-compiler/scripts/pdl/utils.py",
+    ],
+    legacy_create_init = 0,
+    imports = ["pdl-compiler/scripts"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "packet_runtime",
+    srcs = ["pdl-compiler/scripts/packet_runtime.h"],
+    includes = ["pdl-compiler/scripts"],
+    visibility = ["//visibility:public"],
+)
