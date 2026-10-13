@@ -36,6 +36,9 @@ else
   endif
 endif
 
+# Hack for musl toolchain
+filters := ${filters} -fcf-protection
+
 # Convert dpkg-buildflags to bazel flags, filtering out debug and optimization
 # flags as necessary
 conlyopts := $(foreach flag,${CFLAGS},$(if $(filter ${filters},${flag}),,--conlyopt="${flag}"))
@@ -56,6 +59,11 @@ endif
 cuttlefish_common := debian/cuttlefish-base/usr/lib/cuttlefish-common
 cuttlefish_integration := debian/cuttlefish-integration/usr/bin
 cuttlefish_metrics := debian/cuttlefish-metrics/usr/lib/cuttlefish-metrics
+
+# Don't strip musl binaries automatically
+no_dh_strip := \
+  ${cuttlefish_common}/bin/secure_env_amd64_musl \
+  ${cuttlefish_common}/bin/secure_env_arm64_musl \
 
 disk_cache_arg :=
 ifneq ($(strip ${BAZEL_DISK_CACHE_DIR}),)
@@ -106,7 +114,9 @@ override_dh_dwz:
 # Only generate dbgsym package if debug is enabled
 .PHONY: override_dh_strip
 override_dh_strip:
-	dh_strip $(if $(filter ${filters},-g),--no-automatic-dbgsym,)
+	dh_strip $(foreach binary,${no_dh_strip},-X$(notdir ${binary})) $(if $(filter ${filters},-g),--no-automatic-dbgsym,)
+	x86_64-linux-gnu-strip --remove-section=.comment --remove-section=.note $(word 1,${no_dh_strip})
+	aarch64-linux-gnu-strip --remove-section=.comment --remove-section=.note $(word 2,${no_dh_strip})
 
 # Remove bazel metadata during installation
 .PHONY: override_dh_install

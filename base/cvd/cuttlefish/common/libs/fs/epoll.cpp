@@ -26,6 +26,7 @@
 #include <string>
 
 #include "cuttlefish/common/libs/fs/shared_fd.h"
+#include "cuttlefish/posix/temp_failure_retry.h"
 #include "cuttlefish/result/result.h"
 
 namespace cuttlefish {

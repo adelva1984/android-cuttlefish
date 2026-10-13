@@ -28,6 +28,7 @@
 #include "absl/log/log.h"
 
 #include "cuttlefish/posix/strerror.h"
+#include "cuttlefish/posix/temp_failure_retry.h"
 #include "cuttlefish/result/expect.h"
 #include "cuttlefish/result/result_type.h"
 

@@ -16,6 +16,7 @@ cf_cc_library(
     ],
     deps = [
         "//cuttlefish/common/libs/fs",
+        "//cuttlefish/posix:temp_failure_retry",
         "//cuttlefish/result",
     ],
 )
@@ -30,6 +31,7 @@ cf_cc_library(
         "//cuttlefish/common/libs/utils:environment",
         "//cuttlefish/io",
         "//cuttlefish/posix:strerror",
+        "//cuttlefish/posix:temp_failure_retry",
         "//cuttlefish/result:expect",
         "//cuttlefish/result:result_type",
         "@abseil-cpp//absl/log",
@@ -58,6 +60,7 @@ cf_cc_library(
     deps = [
         "//cuttlefish/common/libs/fs:fd",
         "//cuttlefish/posix:strerror",
+        "//cuttlefish/posix:temp_failure_retry",
         "//cuttlefish/result",
         "@abseil-cpp//absl/log",
         "@abseil-cpp//absl/log:check",

@@ -15,6 +15,7 @@
  */
 
 #include "cuttlefish/host/graphics_detector/subprocess.h"
+#include "cuttlefish/posix/temp_failure_retry.h"
 
 #include <dlfcn.h>
 #include <poll.h>

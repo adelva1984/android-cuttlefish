@@ -127,6 +127,7 @@ cf_cc_library(
         "//cuttlefish/posix:rename",
         "//cuttlefish/posix:stat",
         "//cuttlefish/posix:strerror",
+        "//cuttlefish/posix:temp_failure_retry",
         "//cuttlefish/result",
         "@abseil-cpp//absl/log",
         "@abseil-cpp//absl/log:check",

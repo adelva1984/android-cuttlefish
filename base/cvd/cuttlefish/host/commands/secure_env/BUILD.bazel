@@ -1,3 +1,4 @@
+load("//cuttlefish/bazel:musl.bzl", "musl_amd64_binary", "musl_arm64_binary")
 load("//cuttlefish/bazel:rules.bzl", "cf_cc_binary", "cf_cc_library")
 
 package(
@@ -53,4 +54,14 @@ cf_cc_library(
         "//cuttlefish/result",
         "@abseil-cpp//absl/log",
     ],
+)
+
+musl_amd64_binary(
+    name = "secure_env_amd64_musl",
+    binary = ":secure_env",
+)
+
+musl_arm64_binary(
+    name = "secure_env_arm64_musl",
+    binary = ":secure_env",
 )

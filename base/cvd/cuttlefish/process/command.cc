@@ -49,12 +49,12 @@
 #include "cuttlefish/common/libs/fs/shared_fd.h"
 #include "cuttlefish/common/libs/utils/contains.h"
 #include "cuttlefish/common/libs/utils/files.h"
+#include "cuttlefish/posix/temp_failure_retry.h"
 #include "cuttlefish/process/subprocess.h"
 #include "cuttlefish/process/subprocess_options.h"
 #include "cuttlefish/result/result.h"
 
 #ifdef __linux__
-#include <linux/prctl.h>
 #include <sys/prctl.h>
 #endif
 
