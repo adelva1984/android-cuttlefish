@@ -57,6 +57,7 @@
 #include "cuttlefish/posix/rename.h"
 #include "cuttlefish/posix/stat.h"
 #include "cuttlefish/posix/strerror.h"
+#include "cuttlefish/posix/temp_failure_retry.h"  // IWYU pragma: keep
 #include "cuttlefish/result/result.h"
 
 #ifdef __APPLE__
